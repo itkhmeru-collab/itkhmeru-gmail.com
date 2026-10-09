@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: pu-nin-security-web-admin
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: FIREBASE_API_KEY
+        sync: false
+      - key: FIREBASE_URL
+        value: https://punin-mobile-unlock-default-rtdb.asia-southeast1.firebasedatabase.app
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
